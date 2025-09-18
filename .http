@@ -1,0 +1,139 @@
+### Star Wars API - HTTP Request Examples
+### This file contains examples for testing the Star Wars API endpoints
+### Use with VS Code REST Client extension
+
+@baseUrl = http://localhost:3000/api
+
+
+### =============================================================================
+### SEARCH ENDPOINTS
+### =============================================================================
+
+### Search across all categories
+GET {{baseUrl}}/search?query=Luke
+
+### Search across all categories with different term
+GET {{baseUrl}}/search?query=Skywalker
+
+### Search across all categories with vehicle term
+GET {{baseUrl}}/search?query=X-wing
+
+### Search across all categories with planet term
+GET {{baseUrl}}/search?query=Tatooine
+
+### Search in specific category - People
+GET {{baseUrl}}/search/people?query=Skywalker
+
+### Search in specific category - Films
+GET {{baseUrl}}/search/films?query=Empire
+
+### Search in specific category - Starships
+GET {{baseUrl}}/search/starships?query=Millennium
+
+### Search in specific category - Vehicles
+GET {{baseUrl}}/search/vehicles?query=Speeder
+
+### Search in specific category - Species
+GET {{baseUrl}}/search/species?query=Human
+
+### Search in specific category - Planets
+GET {{baseUrl}}/search/planets?query=Coruscant
+
+### Search with empty query (should return error)
+GET {{baseUrl}}/search?query=
+
+### Search in invalid category (should return error)
+GET {{baseUrl}}/search/invalid?query=test
+
+### Search in specific category - Films
+GET {{baseUrl}}/search/films?query=Empire
+
+### Search in specific category - People
+GET {{baseUrl}}/search/people?query=Skywalker
+
+### Search people by ID
+GET {{baseUrl}}/people/20
+
+### Search people by ID (should return error)
+GET {{baseUrl}}/people/100
+
+### Search films by ID
+GET {{baseUrl}}/films/1
+
+### Search films by ID (should return error)
+GET {{baseUrl}}/films/100
+
+### =============================================================================
+### STATS ENDPOINTS
+### =============================================================================
+
+### Get comprehensive API statistics
+GET {{baseUrl}}/stats
+
+### =============================================================================
+### ERROR SCENARIOS
+### =============================================================================
+
+### Missing query parameter (should return 400)
+GET {{baseUrl}}/search
+
+### Invalid category (should return 400)
+GET {{baseUrl}}/search/invalid-category?query=test
+
+### Non-existent endpoint (should return 404)
+GET {{baseUrl}}/non-existent
+
+### =============================================================================
+### TESTING SEQUENCE
+### =============================================================================
+
+### 1. Perform a search
+GET {{baseUrl}}/search?query=Luke
+
+### 2. Get statistics
+GET {{baseUrl}}/stats
+
+### 3. Get statistics again (should recalculate)
+GET {{baseUrl}}/stats
+
+### =============================================================================
+### VARIABLES AND ENVIRONMENTS
+### =============================================================================
+
+### You can create different environments by creating .env files:
+### .env.development, .env.production, etc.
+
+### Example variables that can be used:
+# @baseUrl = http://localhost:3000/api
+# @searchTerm = Luke
+# @category = people
+
+### Then use them in requests:
+# GET {{baseUrl}}/search?query={{searchTerm}}
+# GET {{baseUrl}}/search/{{category}}?query={{searchTerm}}
+
+### =============================================================================
+### TIPS FOR REST CLIENT
+### =============================================================================
+
+### 1. Click "Send Request" above each request to execute it
+### 2. Use Ctrl+Click (Cmd+Click on Mac) on request URLs to open in browser
+### 3. Results appear in a separate panel to the right
+### 4. You can save responses to files using > symbol
+### 5. Use variables to avoid repetition
+### 6. Create separate environments for different configurations
+
+### Example of saving response to file:
+# GET {{baseUrl}}/search?query=Luke
+# >> ./responses/luke-search.json
+
+### Example of using environment variables:
+# ### Development environment
+# @baseUrl = http://localhost:3000/api
+# 
+# ### Production environment
+# @baseUrl = https://api.starwars.example.com/api
+
+### =============================================================================
+### END OF FILE
+### =============================================================================
