@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
-import { createLogger } from '@/config/logger';
-import { peopleController } from '@/controllers/peopleController';
+import { createLogger } from '../config/logger';
+import { peopleController } from '../controllers/peopleController';
 
 const logger = createLogger('people-routes');
 const router = Router();

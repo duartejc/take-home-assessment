@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
 
-import { createLogger } from '@/config/logger';
-import { searchController } from '@/controllers/searchController';
+import { createLogger } from '../config/logger';
+import { searchController } from '../controllers/searchController';
 
 /**
  * @module searchRoutes

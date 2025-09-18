@@ -1,12 +1,11 @@
-import 'module-alias/register';
 import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
 
-import { createLogger } from '@/config/logger';
-import { errorHandler } from '@/middleware/errorHandler';
-import { requestLogger } from '@/middleware/requestLogger';
-import apiRoutes from '@/routes';
+import { createLogger } from './src/config/logger';
+import { errorHandler } from './src/middleware/errorHandler';
+import { requestLogger } from './src/middleware/requestLogger';
+import apiRoutes from './src/routes';
 
 const app = express();
 const port = process.env.PORT ?? 3000;

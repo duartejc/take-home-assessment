@@ -1,7 +1,7 @@
 import { Person, Film, SearchResults } from '@swstarter/shared';
 import axios, { AxiosInstance } from 'axios';
 
-import { createLogger } from '@/config/logger';
+import { createLogger } from '../config/logger';
 
 const logger = createLogger('swapi-service');
 const SWAPI_BASE_URL = process.env.SWAPI_BASE_URL ?? 'https://swapi.dev/api';

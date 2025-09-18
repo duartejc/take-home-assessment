@@ -19,7 +19,7 @@ GET {{baseUrl}}/search?query=Skywalker
 GET {{baseUrl}}/search?query=X-wing
 
 ### Search across all categories with planet term
-GET {{baseUrl}}/search?query=Tatooine
+GET {{baseUrl}}/search?query=Yoda
 
 ### Search in specific category - People
 GET {{baseUrl}}/search/people?query=Skywalker

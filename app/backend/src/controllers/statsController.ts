@@ -1,8 +1,8 @@
 import { StatsResponse } from '@swstarter/shared';
 import { Request, Response, NextFunction } from 'express';
 
-import { createLogger } from '@/config/logger';
-import { statsService } from '@/services/statsService';
+import { createLogger } from '../config/logger';
+import { statsService } from '../services/statsService';
 
 const logger = createLogger('stats-controller');
 

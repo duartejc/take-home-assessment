@@ -1,6 +1,6 @@
 import { ApiSearchResponse, StatsResponse, Person, Film } from '@swstarter/shared';
 
-const API_BASE_URL = 'http://localhost:3000/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export class ApiService {
   static async search(query: string): Promise<ApiSearchResponse> {

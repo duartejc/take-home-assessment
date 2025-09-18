@@ -1,8 +1,8 @@
 import { ApiSearchResponse, SearchResults } from '@swstarter/shared';
 import { Request, Response, NextFunction } from 'express';
 
-import { createLogger } from '@/config/logger';
-import { swapiService } from '@/services/swapiService';
+import { createLogger } from '../config/logger';
+import { swapiService } from '../services/swapiService';
 
 const logger = createLogger('search-controller');
 

@@ -1,5 +1,5 @@
-import { swapiService } from '@/services/swapiService';
-import { createLogger } from '@/config/logger';
+import { swapiService } from './swapiService';
+import { createLogger } from '../config/logger';
 import { StatsResponse } from '@swstarter/shared';
 
 const logger = createLogger('stats-service');

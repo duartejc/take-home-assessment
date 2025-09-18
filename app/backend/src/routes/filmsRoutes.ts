@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
-import { createLogger } from '@/config/logger';
-import { filmsController } from '@/controllers/filmsController';
+import { createLogger } from '../config/logger';
+import { filmsController } from '../controllers/filmsController';
 
 const logger = createLogger('films-routes');
 const router = Router();

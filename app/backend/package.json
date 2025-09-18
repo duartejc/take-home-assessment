@@ -5,7 +5,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "ts-node main.ts",
-    "run": "node dist/main.js",
+    "start": "node dist/main.js",
     "pretest": "npm run build && cd ../shared && npm run build",
     "test": "jest",
     "test:watch": "jest --watch",

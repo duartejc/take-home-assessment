@@ -1,10 +1,10 @@
-import { peopleController } from '@/controllers/peopleController';
-import { swapiService } from '@/services/swapiService';
+import { peopleController } from '../../src/controllers/peopleController';
+import { swapiService } from '../../src/services/swapiService';
 import { createMockRequest, createMockResponse } from '../setup';
 import { describe, it, expect, beforeEach, jest } from '@jest/globals';
 
 // Mock the swapiService
-jest.mock('@/services/swapiService');
+jest.mock('../../src/services/swapiService');
 const mockedSwapiService = swapiService as jest.Mocked<typeof swapiService>;
 
 describe('PeopleController', () => {

@@ -1,6 +1,6 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 
-import { createLogger } from '@/config/logger';
+import { createLogger } from '../config/logger';
 
 const logger = createLogger('error-handler');
 
@@ -12,7 +12,7 @@ interface CustomError extends Error {
   statusCode?: number;
 }
 
-const errorHandler = (err: CustomError, req: Request, res: Response): void => {
+const errorHandler = (err: CustomError, req: Request, res: Response, next: NextFunction): void => {
   logger.error({
     message: err.message,
     stack: err.stack,

@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
 
-import { createLogger } from '@/config/logger';
-import { statsController } from '@/controllers/statsController';
+import { createLogger } from '../config/logger';
+import { statsController } from '../controllers/statsController';
 
 /**
  * @module statsRoutes

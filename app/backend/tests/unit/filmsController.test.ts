@@ -1,9 +1,9 @@
-import { filmsController } from '@/controllers/filmsController';
-import { swapiService } from '@/services/swapiService';
+import { filmsController } from '../../src/controllers/filmsController';
+import { swapiService } from '../../src/services/swapiService';
 import { describe, it, expect, beforeEach, jest } from '@jest/globals';
 
 // Mock the swapiService
-jest.mock('@/services/swapiService');
+jest.mock('../../src/services/swapiService');
 const mockedSwapiService = swapiService as jest.Mocked<typeof swapiService>;
 
 describe('FilmsController', () => {

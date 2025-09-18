@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
-import filmsRoutes from '@/routes/filmsRoutes';
-import peopleRoutes from '@/routes/peopleRoutes';
-import searchRoutes from '@/routes/searchRoutes';
-import statsRoutes from '@/routes/statsRoutes';
+import filmsRoutes from './filmsRoutes';
+import peopleRoutes from './peopleRoutes';
+import searchRoutes from './searchRoutes';
+import statsRoutes from './statsRoutes';
 
 /**
  * @module routes

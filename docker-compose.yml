@@ -1,0 +1,43 @@
+services:
+  # Backend service
+  backend:
+    build:
+      context: .
+      dockerfile: app/backend/Dockerfile
+      target: backend-production
+    image: swstarter-backend:latest
+    container_name: swstarter-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - LOG_LEVEL=info
+      - CORS_ORIGIN=http://localhost:8080
+    networks:
+      - swstarter-network
+    restart: unless-stopped
+
+  # Frontend service
+  frontend:
+    build:
+      context: .
+      dockerfile: app/frontend/Dockerfile
+      target: frontend-production
+    image: swstarter-frontend:latest
+    container_name: swstarter-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    networks:
+      - swstarter-network
+    restart: unless-stopped
+
+networks:
+  swstarter-network:
+    driver: bridge
+
+volumes:
+  # Optional: for persistent data if needed
+  shared-data:

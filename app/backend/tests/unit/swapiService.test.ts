@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { swapiService } from '@/services/swapiService';
+import { swapiService } from '../../src/services/swapiService';
 import { describe, it, expect, beforeEach, jest } from '@jest/globals';
 
 // Mock axios

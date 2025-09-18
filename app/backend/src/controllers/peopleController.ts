@@ -1,8 +1,8 @@
 import { Person } from '@swstarter/shared';
 import { Request, Response } from 'express';
 
-import { createLogger } from '@/config/logger';
-import { swapiService } from '@/services/swapiService';
+import { createLogger } from '../config/logger';
+import { swapiService } from '../services/swapiService';
 
 const logger = createLogger('person-controller');
 
