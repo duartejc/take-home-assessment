@@ -1,6 +1,9 @@
 import { swapiService } from './swapiService';
+
 import { createLogger } from '../config/logger';
 import { StatsResponse } from '@swstarter/shared';
+
+import { queueService } from './queueService';
 
 const logger = createLogger('stats-service');
 
@@ -34,19 +37,9 @@ class StatsService {
 
   async getStats(): Promise<StatsResponse> {
     try {
-      // Check cache first
-      const cachedStats = this.cache.get('stats');
-      if (cachedStats && Date.now() - cachedStats.timestamp < this.cacheTimeout) {
-        logger.info('Returning cached stats');
-        return {
-          success: true,
-          data: cachedStats.data,
-          timestamp: new Date().toISOString()
-        };
-      }
-
-      logger.info('Computing fresh stats');
-
+      // Get query statistics from BullMQ
+      const queryStats = await queueService.getComputedStats();
+      
       // Get sample data from each category to compute stats
       const [people, films, starships, vehicles, species, planets] = await Promise.allSettled([
         this.getCategoryCount('people'),
@@ -76,14 +69,21 @@ class StatsService {
           nodeVersion: process.version,
           platform: process.platform,
         },
+        queryStats: queryStats ? {
+          topQueries: queryStats.topQueries,
+          averageResponseTime: queryStats.averageResponseTime,
+          popularHours: queryStats.popularHours,
+          totalQueries: queryStats.totalQueries,
+          lastComputed: new Date(queryStats.lastComputed).toISOString(),
+        } : {
+          topQueries: [],
+          averageResponseTime: 0,
+          popularHours: [],
+          totalQueries: 0,
+          lastComputed: null,
+        },
         lastUpdated: new Date().toISOString(),
       };
-
-      // Cache the results
-      this.cache.set('stats', {
-        data: statsData,
-        timestamp: Date.now(),
-      });
 
       logger.info('Stats computed successfully');
       return {

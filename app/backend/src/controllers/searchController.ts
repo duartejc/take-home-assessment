@@ -2,12 +2,15 @@ import { ApiSearchResponse, SearchResults } from '@swstarter/shared';
 import { Request, Response, NextFunction } from 'express';
 
 import { createLogger } from '../config/logger';
+import { queueService, QueryData } from '../services/queueService';
 import { swapiService } from '../services/swapiService';
 
 const logger = createLogger('search-controller');
 
 class SearchController {
   async search(req: Request, res: Response, next: NextFunction): Promise<void> {
+    const startTime = Date.now();
+    
     try {
       const { query } = req.query;
 
@@ -33,14 +36,29 @@ class SearchController {
 
       const results: SearchResults = await swapiService.search(query.trim());
 
-      // Calculate total results
-      const totalResults = Object.values(results).reduce((total: number, items: unknown[]) => total + items.length, 0);
+      // Calculate total results and response time
+      const totalResults = results.people.length + results.films.length + results.starships.length + 
+                           results.vehicles.length + results.species.length + results.planets.length;
+      const responseTime = Date.now() - startTime;
 
-      logger.info(`Search completed. Found ${totalResults} total results`);
+      logger.info(`Search completed. Found ${totalResults} total results in ${responseTime}ms`);
+
+      // Collect query data for statistics
+      const queryData: QueryData = {
+        query: query.trim(),
+        timestamp: Date.now(),
+        responseTime,
+        resultsCount: totalResults,
+      };
+
+      // Add query to processing queue (fire and forget)
+      queueService.addQuery(queryData).catch(error => {
+        logger.error(`Failed to add query to queue: ${(error as Error).message}`);
+      });
 
       const response: ApiSearchResponse = {
         query: query.trim(),
-        totalResults,
+        totalResults: totalResults,
         results,
         timestamp: new Date().toISOString()
       };
@@ -54,6 +72,8 @@ class SearchController {
   }
 
   async searchByCategory(req: Request, res: Response, next: NextFunction): Promise<void> {
+    const startTime = Date.now();
+    
     try {
       const { category } = req.params;
       const { query } = req.query;
@@ -90,9 +110,24 @@ class SearchController {
       logger.info(`Processing search request for category: ${category}, query: ${query}`);
 
       const searchMethod = `search${category.charAt(0).toUpperCase() + category.slice(1)}` as keyof typeof swapiService;
-      const results = await (swapiService[searchMethod] as Function)(query.trim());
+      const results = await (swapiService[searchMethod])(query.trim()) as Array<unknown>;
 
-      logger.info(`Search completed for ${category}. Found ${results.length} results`);
+      const responseTime = Date.now() - startTime;
+      logger.info(`Search completed for ${category}. Found ${results.length} results in ${responseTime}ms`);
+
+      // Collect query data for statistics
+      const queryData: QueryData = {
+        query: query.trim(),
+        category,
+        timestamp: Date.now(),
+        responseTime,
+        resultsCount: results.length,
+      };
+
+      // Add query to processing queue (fire and forget)
+      queueService.addQuery(queryData).catch(error => {
+        logger.error(`Failed to add query to queue: ${(error as Error).message}`);
+      });
 
       res.json({
         category,

@@ -12,7 +12,7 @@ interface CustomError extends Error {
   statusCode?: number;
 }
 
-const errorHandler = (err: CustomError, req: Request, res: Response, next: NextFunction): void => {
+const errorHandler = (err: CustomError, req: Request, res: Response, _next: NextFunction): void => {
   logger.error({
     message: err.message,
     stack: err.stack,

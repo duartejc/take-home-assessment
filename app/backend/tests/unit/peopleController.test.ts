@@ -1,6 +1,5 @@
 import { peopleController } from '../../src/controllers/peopleController';
 import { swapiService } from '../../src/services/swapiService';
-import { createMockRequest, createMockResponse } from '../setup';
 import { describe, it, expect, beforeEach, jest } from '@jest/globals';
 
 // Mock the swapiService

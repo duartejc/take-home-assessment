@@ -1,12 +1,12 @@
-import { Person, Film } from './swapi';
+import { Person, Film, Starship, Vehicle, Species, Planet } from './swapi';
 
 export interface SearchResults {
   people: Person[];
   films: Film[];
-  starships: any[];
-  vehicles: any[];
-  species: any[];
-  planets: any[];
+  starships: Starship[];
+  vehicles: Vehicle[];
+  species: Species[];
+  planets: Planet[];
 }
 
 export interface ApiSearchResponse {
@@ -37,6 +37,13 @@ export interface StatsResponse {
       memoryUsage: any;
       nodeVersion: string;
       platform: string;
+    };
+    queryStats: {
+      topQueries: Array<{ query: string; count: number; percentage: number }>;
+      averageResponseTime: number;
+      popularHours: Array<{ hour: number; count: number; percentage: number }>;
+      totalQueries: number;
+      lastComputed: string | null;
     };
     lastUpdated: string;
   };

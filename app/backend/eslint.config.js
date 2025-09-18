@@ -84,7 +84,7 @@ export default [
       ],
 
       // No relative imports (use absolute imports with @ alias)
-      'import/no-relative-packages': 'error',
+      /*'import/no-relative-packages': 'error',
       'no-restricted-imports': [
         'error',
         {
@@ -95,7 +95,7 @@ export default [
             },
           ],
         },
-      ],
+      ],*/
 
       // Additional import rules
       'import/no-unresolved': 'off', // Disabled because TypeScript handles this

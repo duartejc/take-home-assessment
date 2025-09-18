@@ -6,6 +6,7 @@ import { createLogger } from './src/config/logger';
 import { errorHandler } from './src/middleware/errorHandler';
 import { requestLogger } from './src/middleware/requestLogger';
 import apiRoutes from './src/routes';
+import { queueService } from './src/services/queueService';
 
 const app = express();
 const port = process.env.PORT ?? 3000;
@@ -46,7 +47,21 @@ const server = app.listen(port, () => {
   logger.info(`Server running on port ${port}`);
   logger.info(`Environment: ${IS_DEV_ENV ? 'development' : 'production'}`);
   logger.info(`Log level: ${LOG_LEVEL}`);
+  
+  // Initialize queue service asynchronously
+  void initializeQueueService();
 });
+
+// Separate async function for queue service initialization
+async function initializeQueueService(): Promise<void> {
+  try {
+    await queueService.initialize();
+    logger.info('Queue service initialized successfully');
+  } catch (error) {
+    logger.error(`Failed to initialize queue service: ${(error as Error).message}`);
+    // Don't exit the process, just log the error
+  }
+}
 
 // Handle unhandled promise rejections
 process.on('unhandledRejection', (err: Error) => {
@@ -66,7 +81,18 @@ process.on('uncaughtException', (err: Error) => {
 
 process.on('SIGTERM', () => {
   logger.info('SIGTERM received. Shutting down gracefully');
-  server.close(() => {
-    logger.info('Process terminated');
-  });
+  
+  // Handle async cleanup without making the callback async
+  void (async (): Promise<void> => {
+    try {
+      await queueService.close();
+      logger.info('Queue service closed successfully');
+    } catch (error) {
+      logger.error(`Error closing queue service: ${(error as Error).message}`);
+    }
+    
+    server.close(() => {
+      logger.info('Process terminated');
+    });
+  })();
 });

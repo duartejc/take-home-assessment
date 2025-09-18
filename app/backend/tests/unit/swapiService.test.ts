@@ -1,6 +1,12 @@
-import axios from 'axios';
-import { swapiService } from '../../src/services/swapiService';
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { describe, it, expect, beforeEach, jest } from '@jest/globals';
+import axios from 'axios';
+
+import { swapiService } from '../../src/services/swapiService';
 
 // Mock axios
 jest.mock('axios');

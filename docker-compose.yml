@@ -1,4 +1,17 @@
 services:
+  # Redis service for BullMQ queue
+  redis:
+    image: redis:7-alpine
+    container_name: swstarter-redis
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - swstarter-network
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+
   # Backend service
   backend:
     build:
@@ -14,6 +27,10 @@ services:
       - PORT=3000
       - LOG_LEVEL=info
       - CORS_ORIGIN=http://localhost:8080
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
     networks:
       - swstarter-network
     restart: unless-stopped
@@ -41,3 +58,4 @@ networks:
 volumes:
   # Optional: for persistent data if needed
   shared-data:
+  redis-data:
