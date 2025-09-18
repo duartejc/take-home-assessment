@@ -1,6 +1,6 @@
 import { filmsController } from '@/controllers/filmsController';
 import { swapiService } from '@/services/swapiService';
-import { createMockRequest, createMockResponse } from '../setup';
+import { describe, it, expect, beforeEach, jest } from '@jest/globals';
 
 // Mock the swapiService
 jest.mock('@/services/swapiService');
@@ -16,8 +16,44 @@ describe('FilmsController', () => {
     jest.clearAllMocks();
     
     // Create mock request, response, and next function
-    mockReq = createMockRequest();
-    mockRes = createMockResponse();
+    mockReq = {
+      params: {},
+      query: {},
+      body: {},
+      headers: {},
+      method: 'GET',
+      url: '/',
+      get: jest.fn(),
+      header: jest.fn(),
+      accepts: jest.fn(),
+      acceptsCharsets: jest.fn(),
+      acceptsEncodings: jest.fn(),
+      acceptsLanguages: jest.fn(),
+      param: jest.fn(),
+      is: jest.fn(),
+      protocol: 'http',
+      secure: false,
+      ip: '127.0.0.1',
+      ips: ['127.0.0.1'],
+      subdomains: [],
+      path: '/',
+      hostname: 'localhost',
+      fresh: true,
+      stale: false,
+      xhr: false,
+      app: {},
+      baseUrl: '',
+      originalUrl: '/',
+      cookies: {},
+      signedCookies: {},
+      route: {}
+    }
+    mockRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+      end: jest.fn().mockReturnThis()
+    }
     mockNext = jest.fn();
   });
 
@@ -27,7 +63,7 @@ describe('FilmsController', () => {
       mockReq.params = {};
 
       // Act
-      await filmsController.getFilmById(mockReq, mockRes, mockNext);
+      await filmsController.getFilmById(mockReq, mockRes);
 
       // Assert
       expect(mockRes.status).toHaveBeenCalledWith(400);
@@ -40,11 +76,10 @@ describe('FilmsController', () => {
 
     it('should return 400 if ID parameter is empty string', async () => {
       // Arrange
-      const mockReq = createMockRequest({}, { id: '' });
-      const mockRes = createMockResponse();
+      mockReq.params = { id: '' };
 
       // Act
-      await filmsController.getFilmById(mockReq, mockRes, mockNext);
+      await filmsController.getFilmById(mockReq, mockRes);
 
       // Assert
       expect(mockRes.status).toHaveBeenCalledWith(400);
@@ -60,7 +95,7 @@ describe('FilmsController', () => {
       mockReq.params = { id: '   ' };
 
       // Act
-      await filmsController.getFilmById(mockReq, mockRes, mockNext);
+      await filmsController.getFilmById(mockReq, mockRes);
 
       // Assert
       expect(mockRes.status).toHaveBeenCalledWith(400);
@@ -94,7 +129,7 @@ describe('FilmsController', () => {
       mockedSwapiService.getFilmById.mockResolvedValue(mockFilm);
 
       // Act
-      await filmsController.getFilmById(mockReq, mockRes, mockNext);
+      await filmsController.getFilmById(mockReq, mockRes);
 
       // Assert
       expect(mockedSwapiService.getFilmById).toHaveBeenCalledWith('1');
@@ -111,7 +146,7 @@ describe('FilmsController', () => {
       mockedSwapiService.getFilmById.mockRejectedValue(error);
 
       // Act
-      await filmsController.getFilmById(mockReq, mockRes, mockNext);
+      await filmsController.getFilmById(mockReq, mockRes);
 
       // Assert
       expect(mockedSwapiService.getFilmById).toHaveBeenCalledWith('999');
@@ -130,7 +165,7 @@ describe('FilmsController', () => {
       mockedSwapiService.getFilmById.mockRejectedValue(error);
 
       // Act
-      await filmsController.getFilmById(mockReq, mockRes, mockNext);
+      await filmsController.getFilmById(mockReq, mockRes);
 
       // Assert
       expect(mockedSwapiService.getFilmById).toHaveBeenCalledWith('1');
@@ -164,7 +199,7 @@ describe('FilmsController', () => {
       mockedSwapiService.getFilmById.mockResolvedValue(mockFilm);
 
       // Act
-      await filmsController.getFilmById(mockReq, mockRes, mockNext);
+      await filmsController.getFilmById(mockReq, mockRes);
 
       // Assert
       expect(mockedSwapiService.getFilmById).toHaveBeenCalledWith('2');

@@ -4,9 +4,10 @@ module.exports = {
   preset: 'ts-jest',
   testMatch: [
     '**/__tests__/**/*.ts',
-    '**/__tests__/**/*.js',
-    '**/?(*.)+(spec|test).ts',
-    '**/?(*.)+(spec|test).js'
+    '**/?(*.)+(spec|test).ts'
+  ],
+  testPathIgnorePatterns: [
+    '<rootDir>/dist/'
   ],
   collectCoverageFrom: [
     'src/**/*.ts',

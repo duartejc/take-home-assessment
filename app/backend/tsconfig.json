@@ -17,9 +17,10 @@
       "baseUrl": ".",
       "paths": {
         "@/*": ["src/*"],
+        "@/tests/*": ["tests/*"],
         "@swstarter/shared": ["../shared/dist/types"]
       }
     },
-    "include": ["src/**/*", "main.ts"],
-    "exclude": ["node_modules", "dist", "tests"]
+    "include": ["src/**/*", "main.ts", "tests/**/*"],
+    "exclude": ["node_modules", "dist"]
   }

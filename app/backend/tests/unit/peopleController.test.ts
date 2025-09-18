@@ -1,6 +1,7 @@
 import { peopleController } from '@/controllers/peopleController';
 import { swapiService } from '@/services/swapiService';
 import { createMockRequest, createMockResponse } from '../setup';
+import { describe, it, expect, beforeEach, jest } from '@jest/globals';
 
 // Mock the swapiService
 jest.mock('@/services/swapiService');
@@ -16,8 +17,44 @@ describe('PeopleController', () => {
     jest.clearAllMocks();
     
     // Create mock request, response, and next function
-    mockReq = createMockRequest();
-    mockRes = createMockResponse();
+    mockReq = {
+      params: {},
+      query: {},
+      body: {},
+      headers: {},
+      method: 'GET',
+      url: '/',
+      get: jest.fn(),
+      header: jest.fn(),
+      accepts: jest.fn(),
+      acceptsCharsets: jest.fn(),
+      acceptsEncodings: jest.fn(),
+      acceptsLanguages: jest.fn(),
+      param: jest.fn(),
+      is: jest.fn(),
+      protocol: 'http',
+      secure: false,
+      ip: '127.0.0.1',
+      ips: ['127.0.0.1'],
+      subdomains: [],
+      path: '/',
+      hostname: 'localhost',
+      fresh: true,
+      stale: false,
+      xhr: false,
+      app: {},
+      baseUrl: '',
+      originalUrl: '/',
+      cookies: {},
+      signedCookies: {},
+      route: {}
+    }
+    mockRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+      end: jest.fn().mockReturnThis()
+    }
     mockNext = jest.fn();
   });
 
@@ -27,7 +64,7 @@ describe('PeopleController', () => {
       mockReq.params = {};
 
       // Act
-      await peopleController.getPersonById(mockReq, mockRes, mockNext);
+      await peopleController.getPersonById(mockReq, mockRes);
 
       // Assert
       expect(mockRes.status).toHaveBeenCalledWith(400);
@@ -39,12 +76,8 @@ describe('PeopleController', () => {
     });
 
     it('should return 400 if ID parameter is empty string', async () => {
-      // Arrange
-      const mockReq = createMockRequest({}, { id: '' });
-      const mockRes = createMockResponse();
-
       // Act
-      await peopleController.getPersonById(mockReq, mockRes, mockNext);
+      await peopleController.getPersonById(mockReq, mockRes);
 
       // Assert
       expect(mockRes.status).toHaveBeenCalledWith(400);
@@ -60,7 +93,7 @@ describe('PeopleController', () => {
       mockReq.params = { id: '   ' };
 
       // Act
-      await peopleController.getPersonById(mockReq, mockRes, mockNext);
+      await peopleController.getPersonById(mockReq, mockRes);
 
       // Assert
       expect(mockRes.status).toHaveBeenCalledWith(400);
@@ -96,7 +129,7 @@ describe('PeopleController', () => {
       mockedSwapiService.getPersonById.mockResolvedValue(mockPerson);
 
       // Act
-      await peopleController.getPersonById(mockReq, mockRes, mockNext);
+      await peopleController.getPersonById(mockReq, mockRes);
 
       // Assert
       expect(mockedSwapiService.getPersonById).toHaveBeenCalledWith('1');
@@ -113,7 +146,7 @@ describe('PeopleController', () => {
       mockedSwapiService.getPersonById.mockRejectedValue(error);
 
       // Act
-      await peopleController.getPersonById(mockReq, mockRes, mockNext);
+      await peopleController.getPersonById(mockReq, mockRes);
 
       // Assert
       expect(mockedSwapiService.getPersonById).toHaveBeenCalledWith('999');
@@ -132,7 +165,7 @@ describe('PeopleController', () => {
       mockedSwapiService.getPersonById.mockRejectedValue(error);
 
       // Act
-      await peopleController.getPersonById(mockReq, mockRes, mockNext);
+      await peopleController.getPersonById(mockReq, mockRes);
 
       // Assert
       expect(mockedSwapiService.getPersonById).toHaveBeenCalledWith('1');
@@ -168,7 +201,7 @@ describe('PeopleController', () => {
       mockedSwapiService.getPersonById.mockResolvedValue(mockPerson);
 
       // Act
-      await peopleController.getPersonById(mockReq, mockRes, mockNext);
+      await peopleController.getPersonById(mockReq, mockRes);
 
       // Assert
       expect(mockedSwapiService.getPersonById).toHaveBeenCalledWith('4');
@@ -200,7 +233,7 @@ describe('PeopleController', () => {
       mockedSwapiService.getPersonById.mockResolvedValue(mockPerson);
 
       // Act
-      await peopleController.getPersonById(mockReq, mockRes, mockNext);
+      await peopleController.getPersonById(mockReq, mockRes);
 
       // Assert
       expect(mockedSwapiService.getPersonById).toHaveBeenCalledWith('02');

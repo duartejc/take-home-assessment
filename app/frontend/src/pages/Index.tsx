@@ -5,7 +5,7 @@ import { ResultsList } from '@/components/ResultsList';
 import { PersonDetails } from '@/components/PersonDetails';
 import { FilmDetails } from '@/components/FilmDetails';
 import { ApiService } from '@/services/api';
-import { Person, Film, SearchResponse, ApiSearchResponse } from '@swstarter/shared';
+import { Person, Film, ApiSearchResponse } from '@swstarter/shared';
 
 const Index = () => {
   const { id } = useParams();

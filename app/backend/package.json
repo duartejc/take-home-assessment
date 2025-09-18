@@ -18,7 +18,8 @@
     "lint:import-order": "eslint . --rule 'import/order: error'"
   },
   "_moduleAliases": {
-    "@": "./src"
+    "@": "./src",
+    "@/tests": "./tests"
   },
   "dependencies": {
     "@swstarter/shared": "file:../shared",
