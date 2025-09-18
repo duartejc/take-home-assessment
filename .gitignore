@@ -18,7 +18,3 @@ app/shared/.env
 /dist/
 .env
 .DS_Store
-
-app/backend/package-lock.json
-app/frontend/package-lock.json
-app/shared/package-lock.json
