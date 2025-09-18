@@ -1,5 +1,5 @@
 # Build stage for shared library
-FROM node:18-alpine AS shared-builder
+FROM node:20-alpine AS shared-builder
 
 WORKDIR /app/shared
 

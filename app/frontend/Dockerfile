@@ -1,5 +1,5 @@
 # Build stage for shared library
-FROM node:18-alpine AS shared-builder
+FROM node:20-alpine AS shared-builder
 
 WORKDIR /app/shared
 
@@ -16,7 +16,7 @@ COPY app/shared/ .
 RUN npm run build
 
 # Build stage for frontend
-FROM node:18-alpine AS frontend-builder
+FROM node:20-alpine AS frontend-builder
 
 WORKDIR /app
 

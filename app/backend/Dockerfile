@@ -1,5 +1,5 @@
 # Build stage for shared library
-FROM node:18-alpine AS shared-builder
+FROM node:20-alpine AS shared-builder
 
 WORKDIR /app/shared
 
@@ -17,7 +17,7 @@ RUN npm run build
 
 
 # Build stage for backend
-FROM node:18-alpine AS backend-builder
+FROM node:20-alpine AS backend-builder
 
 WORKDIR /app/backend
 
@@ -38,7 +38,7 @@ RUN npm run build
 
 
 # Production stage
-FROM node:18-alpine AS backend-production
+FROM node:20-alpine AS backend-production
 
 WORKDIR /app
 
