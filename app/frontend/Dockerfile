@@ -6,8 +6,8 @@ WORKDIR /app/shared
 # Copy shared package files
 COPY app/shared/package*.json ./
 
-# Install shared dependencies
-RUN npm ci --only=production
+# Install shared dependencies (dev + prod, para permitir build)
+RUN npm ci
 
 # Copy shared source code
 COPY app/shared/ .

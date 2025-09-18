@@ -88,20 +88,68 @@ npm run build
 ## Environment Variables
 
 ### Backend (.env)
+
+#### Core Configuration
+```bash
+NODE_ENV=development              # Application environment (development/production)
+PORT=3000                        # Server port
+LOG_LEVEL=info                   # Logging level (error/warn/info/debug)
+LOG_DIR=logs                     # Directory for log files (optional)
+CORS_ORIGIN=http://localhost:8080 # Allowed CORS origin for frontend
+SWAPI_BASE_URL=https://swapi.dev/api  # Star Wars API base URL
 ```
-NODE_ENV=development
-PORT=3000
-LOG_LEVEL=info
-CORS_ORIGIN=http://localhost:8080
+
+#### Optional Configuration
+```bash
+SWAPI_TIMEOUT=5000               # API request timeout in milliseconds (default: 5000)
+```
+
+#### Redis Configuration (for BullMQ queues)
+```bash
+REDIS_HOST=localhost             # Redis server host
+REDIS_PORT=6379                  # Redis server port
+HOUR_COUNTER_EXPIRATION=86400    # Hour counter expiration in seconds (24h)
+QUERY_COUNTER_EXPIRATION=86400   # Query counter expiration in seconds (24h)
 ```
 
 ### Frontend (.env)
+
+#### Core Configuration
+```bash
+NODE_ENV=development             # Application environment
+VITE_API_BASE_URL=http://localhost:3000  # Backend API base URL
 ```
-NODE_ENV=development
-VITE_API_BASE_URL=http://localhost:3000
-VITE_ENABLE_ANALYTICS=false
-VITE_ENABLE_DEBUG_MODE=false
+
+#### Feature Flags
+```bash
+VITE_ENABLE_ANALYTICS=false      # Enable/disable analytics tracking
+VITE_ENABLE_DEBUG_MODE=false     # Enable/disable debug mode
 ```
+
+### Docker Environment Variables
+
+When running with Docker Compose, the following environment variables are automatically configured:
+
+#### Backend Container
+- `NODE_ENV=production`
+- `PORT=3000`
+- `LOG_LEVEL=info`
+- `CORS_ORIGIN=http://localhost:8080`
+- `REDIS_HOST=redis` (Docker service name)
+- `REDIS_PORT=6379`
+
+#### Redis Container
+- Configured with persistent data storage
+- Exposed on host port `6380` (mapped to container port `6379`)
+
+### Environment Files
+
+The project includes example environment files:
+- `/app/backend/.env.example` - Backend environment variables
+- `/app/frontend/.env.example` - Frontend environment variables
+- `/.env.example` - Root level environment variables
+
+Copy these files to `.env` and adjust values as needed for your environment.
 
 ## Docker Architecture
 
