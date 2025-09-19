@@ -41,6 +41,8 @@ services:
       context: .
       dockerfile: app/frontend/Dockerfile
       target: frontend-production
+      args:
+        VITE_API_BASE_URL: http://localhost:3000/api
     image: swstarter-frontend:latest
     container_name: swstarter-frontend
     ports:

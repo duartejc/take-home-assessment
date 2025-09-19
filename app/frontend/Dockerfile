@@ -37,6 +37,10 @@ RUN npm install
 # Copy frontend source code
 COPY app/frontend/ .
 
+# Set build-time environment variables for Vite
+ARG VITE_API_BASE_URL=http://localhost:3000/api
+ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
+
 # Build the frontend for production
 RUN npm run build
 
