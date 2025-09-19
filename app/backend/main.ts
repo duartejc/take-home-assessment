@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import cors from 'cors';
-import express from 'express';
+import express, { Request, Response } from 'express';
 import { Server } from 'http';
 
 import { createLogger } from './src/config/logger';
@@ -9,6 +9,7 @@ import { requestLogger } from './src/middleware/requestLogger';
 import apiRoutes from './src/routes';
 import { queueService } from './src/services/queueService';
 
+const CORS_ORIGIN = process.env.CORS_ORIGIN ?? 'http://localhost:8080';
 const PORT = process.env.PORT ?? 3000;
 const IS_DEV_ENV = process.env.NODE_ENV !== 'production';
 const LOG_LEVEL = process.env.LOG_LEVEL ?? 'info';
@@ -24,7 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // CORS configuration
 app.use(cors({
-  origin: 'http://localhost:8080',
+  origin: CORS_ORIGIN,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -39,7 +40,7 @@ app.use('/api', apiRoutes);
 app.use(errorHandler);
 
 // Root route - redirect to API info
-app.get('/', (_req, res) => {
+app.get('/', (_req: Request, res: Response) => {
   logger.info('Root endpoint accessed');
   res.redirect('/api');
 });
