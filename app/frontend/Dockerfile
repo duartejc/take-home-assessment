@@ -7,7 +7,9 @@ WORKDIR /app/shared
 COPY app/shared/package*.json ./
 
 # Install shared dependencies (dev + prod, para permitir build)
-RUN npm ci
+# Remove package-lock.json to avoid ARM64/x64 conflicts on Mac
+RUN rm -f package-lock.json
+RUN npm install
 
 # Copy shared source code
 COPY app/shared/ .
@@ -28,7 +30,9 @@ COPY app/frontend/package*.json ./frontend/
 
 # Install frontend dependencies
 WORKDIR /app/frontend
-RUN npm ci
+# Remove package-lock.json to avoid ARM64/x64 conflicts on Mac
+RUN rm -f package-lock.json
+RUN npm install
 
 # Copy frontend source code
 COPY app/frontend/ .
