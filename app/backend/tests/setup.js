@@ -8,6 +8,16 @@ process.env.LOG_LEVEL = 'error';
 // Mock external services
 jest.mock('axios');
 
+// Mock queue service to prevent Redis connection during tests
+jest.mock('../src/services/queueService', () => ({
+  queueService: {
+    initialize: jest.fn().mockResolvedValue(undefined),
+    close: jest.fn().mockResolvedValue(undefined),
+    addQuery: jest.fn().mockResolvedValue(undefined),
+    addStatsJob: jest.fn().mockResolvedValue(undefined),
+  }
+}));
+
 // Set test timeout
 jest.setTimeout(10000);
 

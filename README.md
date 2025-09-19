@@ -61,6 +61,14 @@ docker compose up -d
 
 ## Local Development
 
+### Shared Library
+
+```bash
+cd app/shared
+npm install
+npm run build
+```
+
 ### Backend
 
 ```bash
@@ -75,14 +83,6 @@ npm run dev
 cd app/frontend
 npm install
 npm run dev
-```
-
-### Shared Library
-
-```bash
-cd app/shared
-npm install
-npm run build
 ```
 
 ## Environment Variables
